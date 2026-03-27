@@ -4,7 +4,6 @@ Django settings for MyTravel project.
 
 from pathlib import Path
 from decouple import config
-import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -14,10 +13,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:5174"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5174",
+    "http://localhost:5173",
 ]
 
 INSTALLED_APPS = [
@@ -37,9 +38,9 @@ INSTALLED_APPS = [
     'apps.accounts',
     'apps.tickets',
     'apps.bookings',
-    'apps.payments',
     'apps.trains',
-    'apps.food',
+    'apps.schedules',
+    'apps.payments',
 ]
 
 MIDDLEWARE = [
@@ -124,6 +125,6 @@ REST_FRAMEWORK = {
 }
 
 # Razorpay Configuration
-RAZORPAY_KEY_ID = config('RAZORPAY_KEY_ID', default='')
-RAZORPAY_KEY_SECRET = config('RAZORPAY_KEY_SECRET', default='')
-RAZORPAY_WEBHOOK_SECRET = config('RAZORPAY_WEBHOOK_SECRET', default='')
+RAZORPAY_KEY_ID = 'admin1'
+RAZORPAY_KEY_SECRET = '123'
+

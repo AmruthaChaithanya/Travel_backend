@@ -13,7 +13,7 @@ urlpatterns = [
     path('api/bookings/', include('apps.bookings.urls')),
     path('api/payments/', include('apps.payments.urls')),
     path('api/trains/', include('apps.trains.urls')),
-    path('api/food/', include('apps.food.urls')),
+    path('api/schedules/', include('apps.schedules.urls')),
 ]
 
 if settings.DEBUG:
