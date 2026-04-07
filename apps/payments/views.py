@@ -1,6 +1,7 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.conf import settings
 from apps.bookings.models import Booking
 from .models import PaymentTransaction
 from .razorpay import create_razorpay_order, verify_payment_signature
@@ -18,6 +19,8 @@ class CreateOrderView(APIView):
             return Response({'error': 'Amount is required'}, status=status.HTTP_400_BAD_REQUEST)
         if not booking_id:
             return Response({'error': 'booking_id is required'}, status=status.HTTP_400_BAD_REQUEST)
+        if not getattr(settings, 'RAZORPAY_KEY_ID', None):
+            return Response({'error': 'Payment gateway is not configured'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         try:
             amount = float(amount)
@@ -37,7 +40,7 @@ class CreateOrderView(APIView):
                     'order_id': order_id,
                     'amount': int(amount * 100),
                     'currency': currency,
-                    'key': 'admin1',
+                    'key': settings.RAZORPAY_KEY_ID,
                 }
             )
         except Booking.DoesNotExist:
