@@ -10,7 +10,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = config(
     'ALLOWED_HOSTS',
-    default='localhost,127.0.0.1',
+    default='localhost,127.0.0.1,travel-backend-cabb.onrender.com',
     cast=lambda v: [host.strip() for host in v.split(',') if host.strip()],
 )
 
@@ -36,6 +36,7 @@ ADDITIONAL_CORS_ORIGINS = config(
 CSRF_TRUSTED_ORIGINS = [
     FRONTEND_ORIGIN,
     *LOCAL_FRONTEND_ORIGINS,
+    "https://travel-backend-cabb.onrender.com",
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -123,20 +124,24 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # DATABASE (PostgreSQL)
 # =========================
 
-DATABASES = {
-    'default': {
-        'ENGINE': config('POSTGRES_ENGINE', default=config('DB_ENGINE', default='django.db.backends.postgresql')),
-        'NAME': config('POSTGRES_DB', default=config('DB_NAME', default='mytravel')),
-        'USER': config('POSTGRES_USER', default=config('DB_USER', default='postgres')),
-        'PASSWORD': config('POSTGRES_PASSWORD', default=config('DB_PASSWORD', default='')),
-        'HOST': config('POSTGRES_HOST', default=config('DB_HOST', default='localhost')),
-        'PORT': config('POSTGRES_PORT', default=config('DB_PORT', default='5432')),
-    }
-}
-
 DATABASE_URL = config('DATABASE_URL', default='')
+
 if DATABASE_URL:
-    DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=not DEBUG)
+    DATABASES = {
+        'default': dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=not DEBUG,
+        )
+    }
+else:
+    # Fallback for local development when DATABASE_URL is absent.
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # =========================
