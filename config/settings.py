@@ -36,7 +36,6 @@ ADDITIONAL_CORS_ORIGINS = config(
 CSRF_TRUSTED_ORIGINS = [
     FRONTEND_ORIGIN,
     *LOCAL_FRONTEND_ORIGINS,
-    "https://travel-backend-cabb.onrender.com",
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -53,7 +52,7 @@ CORS_ALLOW_CREDENTIALS = True
 # =========================
 
 INSTALLED_APPS = [
-    'corsheaders',   # ✅ MUST BE FIRST (very important)
+    'corsheaders',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -81,7 +80,7 @@ INSTALLED_APPS = [
 # =========================
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # ✅ MUST BE FIRST
+    'corsheaders.middleware.CorsMiddleware', 
 
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
