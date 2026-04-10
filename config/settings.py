@@ -10,7 +10,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = config(
     'ALLOWED_HOSTS',
-    default='localhost,127.0.0.1,travel-backend-cabb.onrender.com',
+    default='*',
     cast=lambda v: [host.strip() for host in v.split(',') if host.strip()],
 )
 
@@ -169,6 +169,7 @@ REST_FRAMEWORK = {
 # STATIC & MEDIA
 # =========================
 
+STATICFILES_DIRS = []
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
