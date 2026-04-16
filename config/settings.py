@@ -108,14 +108,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # =========================
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'MyTravel',
-        'USER': 'postgres',
-        'PASSWORD': 'Aaccps@1',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
 
