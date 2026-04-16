@@ -1,10 +1,13 @@
 from pathlib import Path
 from decouple import config
 import dj_database_url
+from dotenv import load_dotenv
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
 
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-your-secret-key-here')
+SECRET_KEY = config('SECRET_KEY', default='zaqxsw-cdevfr-bgr-nhgty-yjmku-ikmlop')
 
 DEBUG = config('DEBUG', default=True, cast=bool)
 
@@ -109,12 +112,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('DATABASE_URL'),
+        default=os.getenv('DATABASE_URL'),
         conn_max_age=600,
         ssl_require=True
     )
 }
-
 
 # =========================
 # AUTH
