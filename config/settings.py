@@ -10,7 +10,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = config(
     'ALLOWED_HOSTS',
-    default='*',
+    default='localhost,127.0.0.1,web-production-94788.up.railway.app',
     cast=lambda v: [host.strip() for host in v.split(',') if host.strip()],
 )
 
@@ -36,14 +36,13 @@ ADDITIONAL_CORS_ORIGINS = config(
 CSRF_TRUSTED_ORIGINS = [
     FRONTEND_ORIGIN,
     *LOCAL_FRONTEND_ORIGINS,
-    ALLOWED_HOSTS,
+    "https://web-production-94788.up.railway.app",
 ]
 
 CORS_ALLOWED_ORIGINS = [
     FRONTEND_ORIGIN,
     *LOCAL_FRONTEND_ORIGINS,
     *ADDITIONAL_CORS_ORIGINS,
-    ALLOWED_HOSTS,
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -82,7 +81,7 @@ INSTALLED_APPS = [
 # =========================
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware', 
+    'corsheaders.middleware.CorsMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -125,24 +124,16 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # DATABASE (PostgreSQL)
 # =========================
 
-DATABASE_URL = config('DATABASE_URL', default='')
-
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.parse(
-            DATABASE_URL,
-            conn_max_age=600,
-            ssl_require=not DEBUG,
-        )
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'MyTravel',
+        'USER': 'postgres',
+        'PASSWORD': 'Aaccps@1',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
-else:
-    # Fallback for local development when DATABASE_URL is absent.
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
 
 
 # =========================
@@ -170,7 +161,6 @@ REST_FRAMEWORK = {
 # STATIC & MEDIA
 # =========================
 
-STATICFILES_DIRS = []
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
