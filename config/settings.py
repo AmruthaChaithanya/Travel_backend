@@ -19,30 +19,13 @@ ALLOWED_HOSTS = config(
 # CORS + FRONTEND SETTINGS
 # =========================
 
-FRONTEND_ORIGIN = config('FRONTEND_ORIGIN', default="https://travel-frontend-six-mu.vercel.app").rstrip("/")
-
-LOCAL_FRONTEND_ORIGINS = config(
-    'LOCAL_FRONTEND_ORIGINS',
-    default='http://localhost:5173,http://127.0.0.1:5173',
-    cast=lambda v: [origin.strip().rstrip('/') for origin in v.split(',') if origin.strip()],
-)
-
-ADDITIONAL_CORS_ORIGINS = config(
-    'CORS_ALLOWED_ORIGINS',
-    default='',
-    cast=lambda v: [origin.strip().rstrip('/') for origin in v.split(',') if origin.strip()],
-)
-
 CSRF_TRUSTED_ORIGINS = [
-    FRONTEND_ORIGIN,
-    *LOCAL_FRONTEND_ORIGINS,
+    "https://travel-frontend-six-mu.vercel.app",
     "https://web-production-94788.up.railway.app",
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    FRONTEND_ORIGIN,
-    *LOCAL_FRONTEND_ORIGINS,
-    *ADDITIONAL_CORS_ORIGINS,
+    "https://travel-frontend-six-mu.vercel.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
