@@ -7,7 +7,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
 
-SECRET_KEY = config('SECRET_KEY', default='zaqxsw-cdevfr-bgr-nhgty-yjmku-ikmlop')
+SECRET_KEY = config('SECRET_KEY', default='do$%&l@-=yluvg*imn4ppo=rz8-nb#p4craao=ea!1fa-xk2=a')
 
 DEBUG = config('DEBUG', default=True, cast=bool)
 
